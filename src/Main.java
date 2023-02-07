@@ -3,23 +3,29 @@ import java.util.ArrayList;
 public class Main {
     public static void main (String args[]) {
         ArrayList<String> names = new ArrayList<String>();
-        names.add("Jessica");
-        names.add("Abby");
-        names.add("Emily");
-        names.add("Destiny");
-        names.add("Mateo");
-        names.add("Sofia");
-        names.add("Tim");
-        names.add("James");
-        names.add("Jim");
+        names.add("Jesse");
+        names.add("Bart");
+        names.add("David");
+        names.add("Abigail");
+        names.add("Frank");
+        names.add("Steph");
+        names.add("Thomas");
+        names.add("Jimmy");
+        names.add("Joe");
+        names.add("Klein");
+        names.add("Daisy");
 
+        System.out.println("BEFORE: " + names);
+
+        // write a loop below to traverse names and REMOVE each name that
+        // is exactly 5 letters
         for (int i = 0; i < names.size(); i ++) {
-            String something = names.get(i);
-            if (something.contains("i")) {
-                names.add(i + 1, "hi!");
-                i ++;
+            if (names.get(i).length() == 5){
+                names.remove(names.get(i));
+                i --;
             }
         }
-        System.out.println(names);
+
+        System.out.println("AFTER: " + names);
     }
 }
