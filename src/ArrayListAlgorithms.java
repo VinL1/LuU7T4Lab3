@@ -246,21 +246,113 @@ public class ArrayListAlgorithms {
      *
      *  @param wordList  arraylist of words
      */
-    public static void moveBWords(ArrayList<String> wordList)
-    { int index = 0;
-    for (int i = 0 ; i < wordList.size(); i ++) {
+    public static void moveBWords(ArrayList<String> wordList){
+        int startCount = 0;
+        for (int i = 0; i < wordList.size(); i++){
+            if (wordList.get(i).charAt(0) == 'b') {
+                String removed = wordList.remove(i);
+                wordList.add(startCount, removed);
+                startCount++;
+            }
+        }
     }
+
+    /** Returns an arraylist of Integers that contain all mode(s) of the array numList.
+     *  The mode of a list is the value that appears the greatest number of times.
+     *  A list can have one mode, multiple mode, or no mode.
+     *
+     *  If all elements in the list appear the exact same number of times, there is no
+     *  mode and this method should return an empty arraylist.
+     *
+     *  For example, if numList is: [1, 2, 6, 2, 3, 4, 6, 5, 5, 6, 7],
+     *  then numList contains one mode: 6
+     *  and this method returns an arrayList containing 6
+     *
+     *  If numList is: [1, 2, 3, 2, 4, 5, 5, 6],
+     *  then numList contains two modes: 2, 5
+     *  and this method returns an arraylist containing 2 and 5 (in any order)
+     *
+     *  If numList is: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6],
+     *  then numList contains no mode because all values appear the same number of times
+     *  and this method returns an empty arrayList: []
+     *
+     *  Does NOT mutate (modify) elements in numList
+     *  PRECONDITIONS: numList.length > 0
+     *
+     *  @param numList  numList of ints
+     */
+
+    public static ArrayList<Integer> modes(int[] numList){
+        int maxModeCount = 2;
+        int modeCount;
+        for (int i = 0; i < numList.length; i++){
+            modeCount = 1;
+            for (int j = i+1; j < numList.length; j++){
+                if (numList[i] == numList[j]){
+                    modeCount++;
+                }
+            }
+            if (modeCount > maxModeCount){
+                maxModeCount = modeCount;
+            }
+        }
+
+        ArrayList<Integer> modes = new ArrayList<>();
+        for (int num: numList){
+            modeCount = 0;
+            for (int num2: numList){
+                if (num == num2){
+                    modeCount++;
+                }
+            }
+            if (modeCount == maxModeCount) {
+                modes.add(num);
+            }
+        }
+        for (int i = 0; i < modes.size(); i++){
+            for (int j = i+1; j < modes.size(); j++){
+                if (modes.get(i) == modes.get(j)){
+                    modes.remove(j);
+                    j--;
+                }
+            }
+        }
+        if ((double)numList.length/maxModeCount == modes.size()){
+            modes.clear();
+        }
+        return modes;
     }
 
     public static void main(String[] args) {
-        ArrayList<Integer> intList14 = new ArrayList<Integer>(Arrays.asList(1, 1, 2, 4, 5, 2, 2, 1, 6, 4, 4, 7, 1, 8, 4, 2));
-        ArrayListAlgorithms.removeDuplicates(intList14);
-        System.out.println(intList14);
-        ArrayList<Integer> intList15 = new ArrayList<Integer>(Arrays.asList(1, 1, 1, 2, 1, 1, 1, 1, 3, 2, 1, 2, 2, 4, 3));
-        ArrayListAlgorithms.removeDuplicates(intList15);
-        System.out.println(intList15);
-        ArrayList<Integer> intList16 = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5));
-        ArrayListAlgorithms.removeDuplicates(intList16);
-        System.out.println(intList16);
+        int[] intList18 = {1, 2, 3, 2, 4, 5, 5, 6};
+        ArrayList<Integer> modes = ArrayListAlgorithms.modes(intList18);
+        System.out.println(modes);
+
+        int[] intList19 = {1, 2, 6, 2, 3, 4, 6, 5, 5, 6, 7};
+        ArrayList<Integer> modes2 = ArrayListAlgorithms.modes(intList19);
+        System.out.println(modes2);
+
+        int[] intList20 = {1, 2, 1, 2, 4, 1, 2, 4, 1, 1, 3};
+        ArrayList<Integer> modes3 = ArrayListAlgorithms.modes(intList20);
+        System.out.println(modes3);
+
+        int[] intList21 = {1, 2, 3, 4, 3, 2, 1, 4, 1, 2, 3};
+        ArrayList<Integer> modes4 = ArrayListAlgorithms.modes(intList21);
+        System.out.println(modes4);
+
+        // all numbers appear 1 time
+        int[] intList22 = {1, 2, 3, 4, 5, 6};
+        ArrayList<Integer> modes5 = ArrayListAlgorithms.modes(intList22);
+        System.out.println(modes5);
+
+        // all numbers appear 3 times
+        int[] intList23 = {1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 1, 2, 3, 4, 5, 6};
+        ArrayList<Integer> modes6 = ArrayListAlgorithms.modes(intList23);
+        System.out.println(modes6);
+
+        // this one has an extra 7, so 1, 2, 3, 4, 5, and 6 are all modes!
+        int[] intList24 = {1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6};
+        ArrayList<Integer> modes7 = ArrayListAlgorithms.modes(intList24);
+        System.out.println(modes7);
     }
 }
